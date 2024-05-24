@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  double result = 0;
+  final TextEditingController textEditingController = TextEditingController();
+
+  void convert() {
+    result = double.parse(textEditingController.text) * 83;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF1E5D1),
+      backgroundColor: const Color(0xffD6DAC8),
       appBar: AppBar(
         title: const Text("Currency Converter"),
         centerTitle: true,
-        backgroundColor: const Color(0xffF1E5D1),
+        backgroundColor: const Color(0xffD6DAC8),
         elevation: 0.0,
       ),
       body: Padding(
@@ -18,28 +31,33 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "0",
-              style: TextStyle(fontSize: 34),
+            Text(
+              'INR ${result != 0 ? result.toStringAsFixed(2) : result.toStringAsFixed(0)}',
+              style: const TextStyle(fontSize: 34),
             ),
             const SizedBox(
               height: 16,
             ),
-            const TextField(
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
+            TextField(
+              cursorColor: Colors.black,
+              controller: textEditingController,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              style: const TextStyle(color: Colors.black),
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.monetization_on_outlined),
-                hintText: "Enter a amount here",
+                hintText: "Please enter the amount in USD",
                 hintStyle: TextStyle(color: Colors.grey),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 2),
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),
@@ -50,7 +68,7 @@ class HomeScreen extends StatelessWidget {
               height: 16,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: convert,
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
